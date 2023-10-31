@@ -7,7 +7,7 @@ function App() {
   const [page, setPage] = useState("List");
   const [questions, setQuestions] = useState([]);
 
-  // Function to fetch questions from the API
+
   const fetchQuestions = async () => {
     try {
       const response = await fetch("http://localhost:4000/questions");
@@ -19,12 +19,10 @@ function App() {
   };
 
   useEffect(() => {
-    // Fetch questions when the component mounts
     fetchQuestions();
   }, []);
 
   const addQuestion = (newQuestion) => {
-    // Function to add a new question
     fetch("http://localhost:4000/questions", {
       method: "POST",
       headers: {
@@ -34,7 +32,6 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Update the state with the new question
         setQuestions([...questions, data]);
       })
       .catch((error) => {
@@ -43,12 +40,10 @@ function App() {
   };
 
   const deleteQuestion = (id) => {
-    // Function to delete a question by ID
     fetch(`http://localhost:4000/questions/${id}`, {
       method: "DELETE",
     })
       .then(() => {
-        // Update the state by removing the deleted question
         setQuestions(questions.filter((question) => question.id !== id));
       })
       .catch((error) => {
@@ -57,7 +52,6 @@ function App() {
   };
 
   const updateCorrectAnswer = (id, correctIndex) => {
-    // Function to update the correct answer of a question
     fetch(`http://localhost:4000/questions/${id}`, {
       method: "PATCH",
       headers: {
@@ -66,7 +60,6 @@ function App() {
       body: JSON.stringify({ correctIndex }),
     })
       .then(() => {
-        // Update the state to reflect the updated correct answer
         setQuestions((prevQuestions) =>
           prevQuestions.map((question) => {
             if (question.id === id) {
